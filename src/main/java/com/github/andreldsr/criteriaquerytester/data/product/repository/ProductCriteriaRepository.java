@@ -8,7 +8,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -36,8 +38,10 @@ public class ProductCriteriaRepository {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Product> query = criteriaBuilder.createQuery(Product.class);
         Root<Product> root = query.from(Product.class);
-        query.where(criteriaBuilder.equal(root.get("name"), name));
-        query.where(criteriaBuilder.equal(root.get("price"), price));
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(criteriaBuilder.equal(root.get("name"), name));
+        predicates.add(criteriaBuilder.equal(root.get("price"), price));
+        query.where(predicates.toArray(new Predicate[0]));
         return em.createQuery(query).getResultList();
     }
 
@@ -45,8 +49,25 @@ public class ProductCriteriaRepository {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Product> query = criteriaBuilder.createQuery(Product.class);
         Root<Product> root = query.from(Product.class);
-        query.where(criteriaBuilder.equal(root.get("name"), name));
-        query.where(criteriaBuilder.between(root.get("price"), minPrice, maxPrice));
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(criteriaBuilder.equal(root.get("name"), name));
+        predicates.add(criteriaBuilder.between(root.get("price"), minPrice, maxPrice));
+        query.where(predicates.toArray(new Predicate[0]));
+        return em.createQuery(query).getResultList();
+    }
+
+    public List<Product> findByNameAndPriceBetweenOptional(String name, Double minPrice, Double maxPrice) {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Product> query = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = query.from(Product.class);
+        List<Predicate> predicates = new ArrayList<>();
+        if(name != null)
+            predicates.add(criteriaBuilder.equal(root.get("name"), name));
+        if(minPrice != null)
+            predicates.add(criteriaBuilder.ge(root.get("price"), minPrice));
+        if(maxPrice != null)
+            predicates.add(criteriaBuilder.le(root.get("price"), maxPrice));
+        query.where(predicates.toArray(new Predicate[0]));
         return em.createQuery(query).getResultList();
     }
 }

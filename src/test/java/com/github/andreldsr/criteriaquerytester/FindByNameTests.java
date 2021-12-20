@@ -30,7 +30,7 @@ class FindByNameTests {
     @Autowired
     private ProductCriteriaResolverRepository productCriteriaResolverRepository;
 
-    private final String PRODUCT_NAME = "name";
+    private final String PRODUCT_NAME = "product name";
 
     @Test
     void findProductWithSpringJPA() {

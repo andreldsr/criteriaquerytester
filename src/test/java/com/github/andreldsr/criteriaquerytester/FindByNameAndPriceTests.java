@@ -30,7 +30,7 @@ class FindByNameAndPriceTests {
     @Autowired
     private ProductCriteriaResolverRepository productCriteriaResolverRepository;
 
-    private final String PRODUCT_NAME = "name";
+    private final String PRODUCT_NAME = "product name";
     private final Double PRODUCT_PRICE = 10.0;
 
     @Test

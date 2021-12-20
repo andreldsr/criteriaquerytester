@@ -42,4 +42,15 @@ public class ProductHQLRepository {
         query.setParameter("maxPrice", maxPrice);
         return query.getResultList();
     }
+
+    public List<Product> findByNameAndPriceBetweenOptional(String name, Double minPrice, Double maxPrice) {
+        String hql = "SELECT p FROM Product p WHERE (:name = null or p.name = :name) " +
+                "AND (:minPrice = null or p.price >= :minPrice) " +
+                "AND (:maxPrice = null or p.price <= :maxPrice)";
+        TypedQuery<Product> query = em.createQuery(hql, Product.class);
+        query.setParameter("name", name);
+        query.setParameter("minPrice", minPrice);
+        query.setParameter("maxPrice", maxPrice);
+        return query.getResultList();
+    }
 }

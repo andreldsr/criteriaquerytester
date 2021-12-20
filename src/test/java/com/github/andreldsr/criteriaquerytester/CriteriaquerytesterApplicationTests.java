@@ -30,32 +30,34 @@ class CriteriaquerytesterApplicationTests {
 	@Autowired
 	private ProductCriteriaResolverRepository productCriteriaResolverRepository;
 
+	private final int EXPECTED = 1000;
+
 	@Test
 	void findProductWithSpringJPA() {
 		List<Product> all = productSpringRepository.findAll();
 		assertNotNull(all);
-		assertEquals(1, all.size());
+		assertEquals(EXPECTED, all.size());
 	}
 
 	@Test
 	void findProductWithHQL() {
 		List<Product> all = productRepository.findAll();
 		assertNotNull(all);
-		assertEquals(1, all.size());
+		assertEquals(EXPECTED, all.size());
 	}
 
 	@Test
 	void findProductWithCriteria() {
 		List<Product> all = productCriteriaRepository.findAll();
 		assertNotNull(all);
-		assertEquals(1, all.size());
+		assertEquals(EXPECTED, all.size());
 	}
 
 	@Test
 	void findProductWithCriteriaResolver() {
 		List<Product> all = productCriteriaResolverRepository.getResultList(ProductSearchObject.builder().build());
 		assertNotNull(all);
-		assertEquals(1, all.size());
+		assertEquals(EXPECTED, all.size());
 	}
 
 }

@@ -2,9 +2,13 @@ package com.github.andreldsr.criteriaquerytester.data.product.searchobject;
 
 import com.github.andreldsr.criteriaresolver.annotation.CriteriaField;
 import com.github.andreldsr.criteriaresolver.searchobject.SearchObject;
-import lombok.Builder;
+import lombok.*;
 
 @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductSearchObject extends SearchObject {
     @CriteriaField
     private String name;
